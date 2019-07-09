@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2013, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -14,9 +14,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syndtr/goleveldb/leveldb/filter"
-	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/syndtr/goleveldb/leveldb/storage"
+	"github.com/ztteng/goleveldb/leveldb/filter"
+	"github.com/ztteng/goleveldb/leveldb/opt"
+	"github.com/ztteng/goleveldb/leveldb/storage"
 )
 
 const ctValSize = 1000

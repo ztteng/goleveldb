@@ -1,4 +1,4 @@
-// Copyright (c) 2012, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2012, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reservefs.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -92,6 +92,7 @@ type fileStorage struct {
 //
 // The storage must be closed after use, by calling Close method.
 func OpenFile(path string, readOnly bool) (Storage, error) {
+	//查看目录是否存在 不存在则创建目录
 	if fi, err := os.Stat(path); err == nil {
 		if !fi.IsDir() {
 			return nil, fmt.Errorf("leveldb/storage: open %s: not a directory", path)
@@ -103,7 +104,7 @@ func OpenFile(path string, readOnly bool) (Storage, error) {
 	} else {
 		return nil, err
 	}
-
+	//readOnly = false 创建目录下的LOCK文件.并对文件上排他锁
 	flock, err := newFileLock(filepath.Join(path, "LOCK"), readOnly)
 	if err != nil {
 		return nil, err
@@ -120,6 +121,7 @@ func OpenFile(path string, readOnly bool) (Storage, error) {
 		logSize int64
 	)
 	if !readOnly {
+		//创建目录下的LOG文件
 		logw, err = os.OpenFile(filepath.Join(path, "LOG"), os.O_WRONLY|os.O_CREATE, 0644)
 		if err != nil {
 			return nil, err
@@ -134,10 +136,13 @@ func OpenFile(path string, readOnly bool) (Storage, error) {
 	fs := &fileStorage{
 		path:     path,
 		readOnly: readOnly,
-		flock:    flock,
-		logw:     logw,
-		logSize:  logSize,
+		flock:    flock,   //lock文件句柄
+		logw:     logw,    //log文件句柄
+		logSize:  logSize, //log文件长度
 	}
+
+	//如果需要在一个对象object被从内存中移除前执行一些特殊操作，比如写日志等，可以通过调用以下方式调用函数来实现
+	//在对象被GC进程选中并从内存中移除前，SetFinalizer都不会执行，即使程序正常结束或者发生错误
 	runtime.SetFinalizer(fs, (*fileStorage).Close)
 	return fs, nil
 }

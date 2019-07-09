@@ -19,12 +19,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/syndtr/goleveldb/leveldb/errors"
-	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/syndtr/goleveldb/leveldb/storage"
-	"github.com/syndtr/goleveldb/leveldb/table"
-	"github.com/syndtr/goleveldb/leveldb/util"
+	"github.com/ztteng/goleveldb/leveldb"
+	"github.com/ztteng/goleveldb/leveldb/errors"
+	"github.com/ztteng/goleveldb/leveldb/opt"
+	"github.com/ztteng/goleveldb/leveldb/storage"
+	"github.com/ztteng/goleveldb/leveldb/table"
+	"github.com/ztteng/goleveldb/leveldb/util"
 )
 
 var (
@@ -165,7 +165,7 @@ func (ts *testingStorage) scanTable(fd storage.FileDesc, checksum bool) (corrupt
 
 	o := &opt.Options{
 		DisableLargeBatchTransaction: true,
-		Strict: opt.NoStrict,
+		Strict:                       opt.NoStrict,
 	}
 	if checksum {
 		o.Strict = opt.StrictBlockChecksum | opt.StrictReader

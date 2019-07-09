@@ -1,4 +1,4 @@
-module github.com/syndtr/goleveldb
+module github.com/ztteng/goleveldb
 
 require (
 	github.com/golang/snappy v0.0.1

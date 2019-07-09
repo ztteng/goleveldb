@@ -1,4 +1,4 @@
-// Copyright (c) 2012, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2012, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -17,14 +17,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/syndtr/goleveldb/leveldb/errors"
-	"github.com/syndtr/goleveldb/leveldb/iterator"
-	"github.com/syndtr/goleveldb/leveldb/journal"
-	"github.com/syndtr/goleveldb/leveldb/memdb"
-	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/syndtr/goleveldb/leveldb/storage"
-	"github.com/syndtr/goleveldb/leveldb/table"
-	"github.com/syndtr/goleveldb/leveldb/util"
+	"github.com/ztteng/goleveldb/leveldb/errors"
+	"github.com/ztteng/goleveldb/leveldb/iterator"
+	"github.com/ztteng/goleveldb/leveldb/journal"
+	"github.com/ztteng/goleveldb/leveldb/memdb"
+	"github.com/ztteng/goleveldb/leveldb/opt"
+	"github.com/ztteng/goleveldb/leveldb/storage"
+	"github.com/ztteng/goleveldb/leveldb/table"
+	"github.com/ztteng/goleveldb/leveldb/util"
 )
 
 // DB is a LevelDB database.
@@ -212,10 +212,13 @@ func Open(stor storage.Storage, o *opt.Options) (db *DB, err error) {
 // The returned DB instance is safe for concurrent use.
 // The DB must be closed after use, by calling Close method.
 func OpenFile(path string, o *opt.Options) (db *DB, err error) {
+	//创建目录 以及目录下的LOCK和LOG文件. 对LOCK文件加排它锁保证自由一个进程能处理
+	//如果已经存在着获取他们的句柄
 	stor, err := storage.OpenFile(path, o.GetReadOnly())
 	if err != nil {
 		return
 	}
+
 	db, err = Open(stor, o)
 	if err != nil {
 		stor.Close()

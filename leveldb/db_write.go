@@ -1,4 +1,4 @@
-// Copyright (c) 2012, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2012, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -7,12 +7,13 @@
 package leveldb
 
 import (
+	"fmt"
 	"sync/atomic"
 	"time"
 
-	"github.com/syndtr/goleveldb/leveldb/memdb"
-	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/syndtr/goleveldb/leveldb/util"
+	"github.com/ztteng/goleveldb/leveldb/memdb"
+	"github.com/ztteng/goleveldb/leveldb/opt"
+	"github.com/ztteng/goleveldb/leveldb/util"
 )
 
 func (db *DB) writeJournal(batches []*Batch, seq uint64, sync bool) error {
@@ -329,18 +330,22 @@ func (db *DB) putRec(kt keyType, key, value []byte, wo *opt.WriteOptions) error 
 	if merge {
 		select {
 		case db.writeMergeC <- writeMerge{sync: sync, keyType: kt, key: key, value: value}:
+			//因为writeMergeC无缓冲区 这个时候还没有协程来读取writeMergeC的值.所以数据是写不进去的
 			if <-db.writeMergedC {
 				// Write is merged.
 				return <-db.writeAckC
 			}
 			// Write is not merged, the write lock is handed to us. Continue.
 		case db.writeLockC <- struct{}{}:
+			fmt.Println("1")
 			// Write lock acquired.
 		case err := <-db.compPerErrC:
+			fmt.Println("1")
 			// Compaction error.
 			return err
 		case <-db.closeC:
 			// Closed
+			fmt.Println("1")
 			return ErrClosed
 		}
 	} else {

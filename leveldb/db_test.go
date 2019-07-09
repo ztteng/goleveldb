@@ -1,4 +1,4 @@
-// Copyright (c) 2012, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2012, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -25,14 +25,14 @@ import (
 
 	"github.com/onsi/gomega"
 
-	"github.com/syndtr/goleveldb/leveldb/comparer"
-	"github.com/syndtr/goleveldb/leveldb/errors"
-	"github.com/syndtr/goleveldb/leveldb/filter"
-	"github.com/syndtr/goleveldb/leveldb/iterator"
-	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/syndtr/goleveldb/leveldb/storage"
-	"github.com/syndtr/goleveldb/leveldb/testutil"
-	"github.com/syndtr/goleveldb/leveldb/util"
+	"github.com/ztteng/goleveldb/leveldb/comparer"
+	"github.com/ztteng/goleveldb/leveldb/errors"
+	"github.com/ztteng/goleveldb/leveldb/filter"
+	"github.com/ztteng/goleveldb/leveldb/iterator"
+	"github.com/ztteng/goleveldb/leveldb/opt"
+	"github.com/ztteng/goleveldb/leveldb/storage"
+	"github.com/ztteng/goleveldb/leveldb/testutil"
+	"github.com/ztteng/goleveldb/leveldb/util"
 )
 
 func tkey(i int) []byte {

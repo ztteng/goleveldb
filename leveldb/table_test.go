@@ -1,4 +1,4 @@
-// Copyright (c) 2019, Suryandaru Triandana <syndtr@gmail.com>
+// Copyright (c) 2019, Suryandaru Triandana <ztteng@gmail.com>
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
@@ -13,8 +13,8 @@ import (
 	"testing"
 
 	"github.com/onsi/gomega"
-	"github.com/syndtr/goleveldb/leveldb/storage"
-	"github.com/syndtr/goleveldb/leveldb/testutil"
+	"github.com/ztteng/goleveldb/leveldb/storage"
+	"github.com/ztteng/goleveldb/leveldb/testutil"
 )
 
 func TestGetOverlaps(t *testing.T) {
